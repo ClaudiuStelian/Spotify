@@ -11,14 +11,14 @@ services:
       DB_PORT: 3306 
       DB_HOST: mysql-db 
       DB_USER: root  
-      DB_PASS: 
-      MYSQL_DB: spotify  
+      DB_PASS: root
+      MYSQL_DB: spotify
 
   mysql-db:
     image: mysql:latest
     container_name: my-mysql-db
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - '3306:3306'

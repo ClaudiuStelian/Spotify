@@ -16,11 +16,11 @@
     4.1. `docker pull mysql:latest`           
     4.2. `docker-compose up -d`  
     4.3. `docker cp create_tables.sql my-mysql-db:/create_tables.sql`         
-    4.4. `docker exec -i my-mysql-db mysql -u root -p < create_tables.sql `  
+    4.4. `docker cp create_tables.sql my-mysql-db:/create_tables.sql`  
  5. For testing the app use any of :   
             [Spotify.postman_collection.json](Spotify.postman_collection.json)   
             [Spotify-urls.txt](Spotify-urls.txt) 
 
 
-
+### NOTE:Please update the passwords as per your wish they are all set `root` by default! 
 
