@@ -2,24 +2,17 @@ curl --location 'http://localhost:8080/playlists' \
 --header 'Content-Type: application/json' \
 --data '{
   "playlistName": "80'\''s",
-  "playlistDescription": "hippy music",
+  "playlistDescription": "Hippie music",
   "tracks": [
     {
-      "trackTitle": "Oh my god",
-      "artists": [
-        {
-          "artistName": "Claudiu"
-        },
-        {
-          "artistName": "Stelian"
-        }
-      ]
+      "trackTitle": "Imagine",
+      "artists": []
     },
     {
-      "trackTitle": "I see fire",
+      "trackTitle": "“Light My Fire",
       "artists": [
         {
-          "artistName": "Stefan"
+          "artistName": "Jefferson Airplane"
         }
       ]
     }
@@ -27,5 +20,5 @@ curl --location 'http://localhost:8080/playlists' \
 }
 '
 
-curl --location 'http://localhost:8080/playlists/1' \
+curl --location 'http://localhost:8080/playlists/11' \
 --data ''

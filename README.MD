@@ -9,7 +9,7 @@
 ## Usage Guide
 
  1. Create MySQL DB by running the queries from [Spotify-queries.sql](Spotify-queries.sql)       
- 3. Insert the DB login details and server's PORT in .env file.      
+ 3. Insert the DB server's details in .env file.      
  4. To run the web applicaiton use `npm run start` command.  
  3. For furthure enhencement I recomend running the application using nodemon utilty tool `npm run dev` .   
  4. The web app can also run in a docker by simply running the follwoing terminal commands:    

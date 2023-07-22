@@ -1,12 +1,12 @@
-const playlistService = require("../middleware/playlistsServices");
+const playlistService = require("../services/playlistsServices");
 const pool = require("../config/database");
+
 //@desc Create New playlist
 //@route POST /playlists
 //@access public
 const createPlaylist = (req, res) => {
     console.log("The request body is:", req.body);
     const { playlistName, playlistDescription, tracks } = req.body;
-
     const playlistData = {
         playlistName,
         playlistDescription,
@@ -29,7 +29,6 @@ const createPlaylist = (req, res) => {
 //@access public
 const getPlaylist = (req, res) => {
     const playlistID = req.params.id;
-
     playlistService.getPlaylist(playlistID, (error, playlist) => {
         if (error) {
             console.error("Error fetching playlist:", error);
