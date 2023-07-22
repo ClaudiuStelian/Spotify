@@ -53,5 +53,4 @@ jobs:
       - name: Retrieve Playlist
         run: |
           sleep 15
-          curl --location 'http://localhost:8080/playlists/1' \
-          --data ''
+          curl --location 'http://localhost:8080/playlists/1'
