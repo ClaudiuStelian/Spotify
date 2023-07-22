@@ -23,6 +23,6 @@ jobs:
         run: |
           docker pull mysql:latest
           docker-compose up -d
+          sleep 15
           docker cp create_tables.sql my-mysql-db:/create_tables.sql
-          dockerize -wait tcp://my-mysql-db:3306 -timeout 1m
           docker exec -i my-mysql-db mysql -u root --password=root < create_tables.sql
