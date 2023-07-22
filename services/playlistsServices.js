@@ -2,19 +2,17 @@ const pool = require("../config/database");
 
 module.exports = {
     getPlaylist: (playlistID, callBack) => {
+
         //Retrieve a Playlist
         getPlaylistQuery(playlistID, callBack);
     },
     create: (data, callBack) => {
         const { playlistName, playlistDescription, tracks } = data;
+
         //Create a Playlist
-        createPlaylistQuery(playlistName, playlistDescription, tracks, callBack)
+        createPlaylistQuery(playlistName, playlistDescription, tracks, callBack);
     }
 };
-
-
-
-
 
 function getPlaylistQuery(playlistID, callBack) {
     pool.query(
@@ -25,44 +23,56 @@ function getPlaylistQuery(playlistID, callBack) {
                 return callBack({ message: "Playlist not found" });
             }
             const playlist = playlistResults[0];
-            pool.query(
-                `SELECT * FROM tracks WHERE playlist_id = ?`,
-                [playlistID],
-                (error, trackResults) => {
-                    if (error) {
-                        console.error("Error fetching tracks:", error);
-                        return callBack({ error: "Failed to fetch tracks" });
-                    }
-                    const tracks = trackResults;
-                    tracks.forEach((track, index) => {
-                        pool.query(
-                            `SELECT artist_name FROM artists WHERE track_id = ?`,
-                            [track.track_id],
-                            (error, artistResults) => {
-                                if (error) {
-                                    console.error("Error fetching artists:", error);
-                                    return callBack({ error: "Failed to fetch artists" });
-                                }
-                                const artists = artistResults.map((artist) => ({
-                                    artistName: artist.artist_name,
-                                }));
-                                tracks[index].artists = artists;
-                                if (index === tracks.length - 1) {
-                                    playlist.tracks = tracks;
-                                    return callBack(null, playlist);
-                                }
-                            }
-                        );
-                    });
-                }
-            );
+
+            //Retrieve a Tracks
+            getTracksQuerry(error, playlistID, callBack, playlist);
         }
     );
 }
 
+function getTracksQuerry(error, playlistID, callBack, playlist) {
+    pool.query(
+        `SELECT * FROM tracks WHERE playlist_id = ?`,
+        [playlistID],
+        (error, trackResults) => {
+            if (error) {
+                console.error("Error fetching tracks:", error);
+                return callBack({ error: "Failed to fetch tracks" });
+            }
+            const tracks = trackResults;
+
+            //Retrieve a Artists
+            getArtistsQuery(error, tracks, playlist, callBack);
+        }
+    );
+}
+
+function getArtistsQuery(error, tracks, playlist, callBack) {
+    tracks.forEach((track, index) => {
+        pool.query(
+            `SELECT artist_name FROM artists WHERE track_id = ?`,
+            [track.track_id],
+            (error, artistResults) => {
+                if (error) {
+                    console.error("Error fetching artists:", error);
+                    return callBack({ error: "Failed to fetch artists" });
+                }
+                const artists = artistResults.map((artist) => ({
+                    artistName: artist.artist_name,
+                }));
+                tracks[index].artists = artists;
+                if (index === tracks.length - 1) {
+                    playlist.tracks = tracks;
+                    return callBack(null, playlist);
+                }
+            }
+        );
+    });
+}
+
 function createPlaylistQuery(playlistName, playlistDescription, tracks, callBack) {
     if (!playlistName || !playlistDescription || !tracks) {
-        return callBack(null, { message: "All fields are mendatory" })
+        return callBack(null, { message: "All fields are mendatory" });
     } else {
         pool.query(
             `INSERT INTO playlists (playlist_name, playlist_description) VALUES (?, ?)`,
@@ -71,9 +81,7 @@ function createPlaylistQuery(playlistName, playlistDescription, tracks, callBack
                 if (error) {
                     return callBack(error);
                 }
-
                 const playlistID = results.insertId;
-
                 if (Array.isArray(tracks)) {
                     let trackInsertValues = [];
                     let artistInsertValues = [];
@@ -90,33 +98,39 @@ function createPlaylistQuery(playlistName, playlistDescription, tracks, callBack
                         }
                     });
 
-                    pool.query(
-                        `INSERT INTO tracks (track_title, playlist_id) VALUES ?`,
-                        [trackInsertValues],
-                        (error, results) => {
-                            if (error) {
-                                return callBack(error);
-                            }
-
-                            const insertedTrackIDs = results.insertId;
-
-                            pool.query(
-                                `INSERT INTO artists (artist_id, artist_name, track_id) VALUES ?`,
-                                [artistInsertValues.map((values) => [...values, insertedTrackIDs])],
-                                (error, results) => {
-                                    if (error) {
-                                        return callBack(error);
-                                    }
-
-                                    return callBack(null, { message: "Playlist created successfully!", playlistID });
-                                }
-                            );
-                        }
-                    );
+                    //Create Tracks
+                    insertTracksQuery(trackInsertValues, artistInsertValues, callBack, playlistID);
                 } else {
                     return callBack(null, { message: "Playlist created successfully!", playlistID });
                 }
             }
         );
     }
+}
+
+function insertTracksQuery(trackInsertValues, artistInsertValues, callBack, playlistID) {
+    pool.query(
+        `INSERT INTO tracks (track_title, playlist_id) VALUES ?`,
+        [trackInsertValues],
+        (error, results) => {
+            if (error) {
+                return callBack(error);
+            }
+            const insertedTrackIDs = results.insertId;
+            inserArtistQuery(artistInsertValues, insertedTrackIDs, playlistID, callBack);
+        }
+    );
+}
+
+function inserArtistQuery(artistInsertValues, insertedTrackIDs, playlistID, callBack) {
+    pool.query(
+        `INSERT INTO artists (artist_id, artist_name, track_id) VALUES ?`,
+        [artistInsertValues.map((values) => [...values, insertedTrackIDs])],
+        (error, results) => {
+            if (error) {
+                return callBack(error);
+            }
+            return callBack(null, { message: "Playlist created successfully!", playlistID });
+        }
+    );
 }
