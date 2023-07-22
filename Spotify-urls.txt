@@ -20,5 +20,5 @@ curl --location 'http://localhost:8080/playlists' \
 }
 '
 
-curl --location 'http://localhost:8080/playlists/11' \
+curl --location 'http://localhost:8080/playlists/1' \
 --data ''

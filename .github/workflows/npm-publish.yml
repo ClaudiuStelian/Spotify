@@ -26,3 +26,31 @@ jobs:
           sleep 15
           docker cp create_tables.sql my-mysql-db:/create_tables.sql
           docker exec -i my-mysql-db mysql -u root --password=root < create_tables.sql
+
+      - name: Create Playlist
+        run: |
+          curl --location 'http://localhost:8080/playlists' \
+          --header 'Content-Type: application/json' \
+          --data '{
+            "playlistName": "80'\''s",
+            "playlistDescription": "Hippie music",
+            "tracks": [
+              {
+                "trackTitle": "Imagine",
+                "artists": []
+              },
+              {
+                "trackTitle": "“Light My Fire",
+                "artists": [
+                  {
+                    "artistName": "Jefferson Airplane"
+                  }
+                ]
+              }
+            ]
+          }'
+
+      - name: Retrieve Playlist
+        run: |
+          curl --location 'http://localhost:8080/playlists/1' \
+          --data ''
