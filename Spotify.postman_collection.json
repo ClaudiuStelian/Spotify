@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "496be2c2-b345-4c46-9ffe-c484bc000fd7",
+		"name": "Spotify",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21502885"
+	},
+	"item": [
+		{
+			"name": "POST playlist",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"playlistName\": \"80's\",\r\n  \"playlistDescription\": \"hippy music\",\r\n  \"tracks\": [\r\n    {\r\n      \"trackTitle\": \"Oh my god\",\r\n      \"artists\": [\r\n        {\r\n          \"artistName\": \"Claudiu\"\r\n        },\r\n        {\r\n          \"artistName\": \"Stelian\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"trackTitle\": \"I see fire\",\r\n      \"artists\": [\r\n        {\r\n          \"artistName\": \"Stefan\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/playlists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET playlist by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"playlistName\": \"80's\",\r\n  \"playlistDescription\": \"hippy music\",\r\n  \"tracks\": [\r\n    {\r\n      \"trackTitle\": \"Oh my god\",\r\n      \"artists\": [\r\n        {\r\n          \"artistName\": \"Claudiu\"\r\n        },\r\n        {\r\n          \"artistName\": \"Stelian\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"trackTitle\": \"I see fire\",\r\n      \"artists\": [\r\n        {\r\n          \"artistName\": \"Stefan\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/playlists/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playlists",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

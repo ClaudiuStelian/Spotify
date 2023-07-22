@@ -1,0 +1,57 @@
+curl --location 'http://localhost:8080/playlists' \
+--header 'Content-Type: application/json' \
+--data '{
+  "playlistName": "80'\''s",
+  "playlistDescription": "hippy music",
+  "tracks": [
+    {
+      "trackTitle": "Oh my god",
+      "artists": [
+        {
+          "artistName": "Claudiu"
+        },
+        {
+          "artistName": "Stelian"
+        }
+      ]
+    },
+    {
+      "trackTitle": "I see fire",
+      "artists": [
+        {
+          "artistName": "Stefan"
+        }
+      ]
+    }
+  ]
+}
+'
+
+curl --location --request GET 'http://localhost:8080/playlists/1' \
+--header 'Content-Type: application/json' \
+--data '{
+  "playlistName": "80'\''s",
+  "playlistDescription": "hippy music",
+  "tracks": [
+    {
+      "trackTitle": "Oh my god",
+      "artists": [
+        {
+          "artistName": "Claudiu"
+        },
+        {
+          "artistName": "Stelian"
+        }
+      ]
+    },
+    {
+      "trackTitle": "I see fire",
+      "artists": [
+        {
+          "artistName": "Stefan"
+        }
+      ]
+    }
+  ]
+}
+'
