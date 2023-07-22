@@ -7,11 +7,6 @@ module.exports = {
             `SELECT * FROM playlists WHERE playlist_id = ?`,
             [playlistID],
             (error, playlistResults) => {
-                if (error) {
-                    console.error("Error fetching playlist:", error);
-                    return callBack({ error: "Failed to fetch playlist" });
-                }
-
                 if (playlistResults.length === 0) {
                     return callBack({ message: "Playlist not found" });
                 }
@@ -28,8 +23,29 @@ module.exports = {
                         }
 
                         const tracks = trackResults;
-                        playlist.tracks = tracks;
-                        return callBack(null, playlist);
+                        tracks.forEach((track, index) => {
+                            pool.query(
+                                `SELECT artist_name FROM artists WHERE track_id = ?`,
+                                [track.track_id],
+                                (error, artistResults) => {
+                                    if (error) {
+                                        console.error("Error fetching artists:", error);
+                                        return callBack({ error: "Failed to fetch artists" });
+                                    }
+
+                                    const artists = artistResults.map((artist) => ({
+                                        artistName: artist.artist_name,
+                                    }));
+
+                                    tracks[index].artists = artists;
+
+                                    if (index === tracks.length - 1) {
+                                        playlist.tracks = tracks;
+                                        return callBack(null, playlist);
+                                    }
+                                }
+                            );
+                        });
                     }
                 );
             }
