@@ -16,12 +16,13 @@ jobs:
       - name: Build Docker Image
         uses: docker/build-push-action@v2
         with:
-          context: . 
-          push: false 
+          context: .
+          push: false
 
-      - name: Run Docker Container
+      - name: Run Docker Containers
         run: |
           docker pull mysql:latest
           docker-compose up -d
+          sleep 15
           docker cp create_tables.sql my-mysql-db:/create_tables.sql
           docker exec -i my-mysql-db mysql -u root --password=root < create_tables.sql
