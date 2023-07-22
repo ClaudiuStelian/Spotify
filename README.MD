@@ -20,7 +20,7 @@
  5. For testing the app use any of :   
             [Spotify.postman_collection.json](Spotify.postman_collection.json)   
             [Spotify-urls.txt](Spotify-urls.txt) 
-
+ 6. For automated testing you can check the Git's [Actions](https://github.com/ClaudiuStelian/Spotify/actions) section where a build get triggered on commit.
 
 ### NOTE:Please update the passwords as per your wish they are all set `root` by default! 
 
