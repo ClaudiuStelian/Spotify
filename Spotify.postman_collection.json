@@ -50,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"playlistName\": \"80's\",\r\n  \"playlistDescription\": \"hippy music\",\r\n  \"tracks\": [\r\n    {\r\n      \"trackTitle\": \"Oh my god\",\r\n      \"artists\": [\r\n        {\r\n          \"artistName\": \"Claudiu\"\r\n        },\r\n        {\r\n          \"artistName\": \"Stelian\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"trackTitle\": \"I see fire\",\r\n      \"artists\": [\r\n        {\r\n          \"artistName\": \"Stefan\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}\r\n",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
