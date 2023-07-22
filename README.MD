@@ -13,7 +13,7 @@
  4. To run the web applicaiton use `npm run start` command.  
  3. For furthure enhencement I recomend running the application using nodemon utilty tool `npm run dev` .   
  4. The web app can also run in a docker by simply running the follwoing termina commands:    
-    4.1. `1.docker pull mysql:latest`           
+    4.1. `docker pull mysql:latest`           
     4.2. `docker-compose up -d`  
     4.3. `docker cp create_tables.sql my-mysql-db:/create_tables.sql`         
     4.4. `docker exec -i my-mysql-db mysql -u root -p < create_tables.sql `  
