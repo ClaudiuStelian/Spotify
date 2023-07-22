@@ -1,0 +1,27 @@
+name: Docker Build & Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Out Code
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: . 
+          push: false 
+
+      - name: Run Docker Container
+        run: |
+          docker pull mysql:latest
+          docker-compose up -d
+          docker cp create_tables.sql my-mysql-db:/create_tables.sql
+          docker exec -i my-mysql-db mysql -u root --password=root < create_tables.sql
